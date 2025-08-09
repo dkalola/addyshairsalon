@@ -2507,7 +2507,6 @@ footer form.contact-form input[type="submit"] {
   transition: transform 0.35s;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
-  color: #ffffff;
   text-align: center;
   position: relative;
   top: 35px;

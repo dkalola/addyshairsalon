@@ -1,0 +1,1034 @@
+
+
+<style>
+  h1 {
+    display: inline-block;
+    color: white;
+    font-size: 25px;
+    border-bottom: 2px solid white;
+    padding-bottom: 10px; /* Adjust this value to change the spacing */
+  }
+  
+ .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 50px 60px;
+            width: 100%;
+            max-width: 1200px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #ffffff;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: #eaba66;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-input:hover {
+            border-color: #cbd5e0;
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #ffffff;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            appearance: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-select:focus {
+            border-color: #eaba66;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #eaba66 0%, #a2714b 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .required {
+            color: #e53e3e;
+        }
+
+        /* Auto-fill dropdown styles */
+        .autocomplete-container {
+            position: relative;
+        }
+
+        .autocomplete-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .autocomplete-suggestions.show {
+            display: block;
+        }
+
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid #f7fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .suggestion-item:hover,
+        .suggestion-item.selected {
+            background-color: #f7fafc;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-name {
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .suggestion-details {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .auto-fill-indicator {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #48bb78;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .auto-fill-indicator.show {
+            opacity: 1;
+        }
+
+        .form-input.auto-filled {
+            border-color: #48bb78;
+            background-color: #f0fff4;
+        }
+
+        @media (max-width: 1024px) {
+            .form-container {
+                max-width: 800px;
+                padding: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 32px 24px;
+                margin: 16px;
+                max-width: 100%;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .form-title {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 24px 20px;
+                margin: 12px;
+                border-radius: 20px;
+            }
+            
+            .form-input, .form-select {
+                padding: 14px 16px;
+                font-size: 16px;
+            }
+            
+            .submit-btn {
+                padding: 16px;
+                font-size: 16px;
+            }
+            
+            .form-title {
+                font-size: 22px;
+            }
+            
+            .form-subtitle {
+                font-size: 14px;
+            }
+        }
+</style>
+<div
+  class="section"
+  style="background-image: url('/images/demo/home/slider01.jpg'); height: fit-content"
+>
+  <div class="container" style="padding-top: 200px; padding-bottom: 200px;">
+    <a
+      href="#"
+      id="create-appointment-btn"
+      class="btn btn-default"
+      style="color: white; border-color: white"
+      >Create Appointment</a
+    >
+    <a
+      href="#"
+      id="search-clients-btn"
+      class="btn btn-default"
+      style="color: white; border-color: white"
+      >Search Clients</a
+    >
+
+    <div id=forms-container" style="padding-top: 50px">
+      <div id="create-appointment-form" class="form-section">
+            <div class="form-container">
+     
+
+        <div class="form-header">
+            <h1 class="form-title">Book Your Appointment</h1>
+            <p class="form-subtitle">Schedule a consultation with our experts</p>
+        </div>
+
+       <form id="appointmentForm">
+            <div class="form-row">
+                <div class="form-group autocomplete-container">
+                    <label class="form-label" for="firstName">First Name <span class="required">*</span></label>
+                    <input type="text" id="firstName" name="firstName" class="form-input" required autocomplete="off">
+                    <div class="auto-fill-indicator" id="firstNameIndicator">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20,6 9,17 4,12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="autocomplete-suggestions" id="firstNameSuggestions"></div>
+                </div>
+                <div class="form-group autocomplete-container">
+                    <label class="form-label" for="lastName">Last Name <span class="required">*</span></label>
+                    <input type="text" id="lastName" name="lastName" class="form-input" required autocomplete="off">
+                    <div class="auto-fill-indicator" id="lastNameIndicator">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20,6 9,17 4,12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="autocomplete-suggestions" id="lastNameSuggestions"></div>
+                </div>
+            </div>
+
+          
+
+            <div class="form-group">
+                <label class="form-label" for="phone">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 9876543210" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="appointmentDate">Preferred Date <span class="required">*</span></label>
+                    <input type="date" id="appointmentDate" name="appointmentDate" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="appointmentTime">Preferred Time <span class="required">*</span></label>
+                    <select id="appointmentTime" name="appointmentTime" class="form-select" required>
+                        <option value="09:00">9:00 AM</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="11:00">11:00 AM</option>
+                        <option value="12:00">12:00 PM</option>
+                        <option value="13:00">1:00 PM</option>
+                        <option value="14:00">2:00 PM</option>
+                        <option value="15:00">3:00 PM</option>
+                        <option value="16:00">4:00 PM</option>
+                        <option value="17:00">5:00 PM</option>
+                    </select>
+                </div>
+            </div>
+             <div class="form-row">
+                 <div class="form-group">
+                <label class="form-label" for="stylistName">Stylist Name <span class="required">*</span></label>
+                <select id="stylistName" name="stylistName" class="form-select" required>
+                    <option value="ASHISH">Ashish</option>
+                    <option value="RAVI">Ravi</option>
+                    <option value="HIREN">Hiren</option>
+                    <option value="HARDIK">Hardik</option>
+                    <option value="BHANO">Bhano</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="serviceType">Service Type <span class="required">*</span></label>
+                <select id="serviceType" name="serviceType" class="form-select" required>
+                    <option value="HC">Hair Cut</option>
+                    <option value="BS">Beard Shave</option>
+                    <option value="FC">Facial</option>
+                    <option value="BAHT">Beard and Hair Trimming</option>
+                </select>
+            </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="notes">Additional Notes</label>
+                <textarea id="notes" name="notes" class="form-input form-textarea" placeholder="Please describe your concerns or any special requirements..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Book Appointment
+            </button>
+        </form>
+    </div>
+      </div>
+
+      <div id="search-clients-form" class="form-section" style="display: none">
+         <div class="form-container">
+     
+
+        <div class="form-header">
+            <h1 class="form-title">Search Clients</h1>
+        </div>
+
+       <form id="searchClientsForm">
+                            <div class="form-row">
+                                <div class="form-group autocomplete-container">
+                                    <label class="form-label" for="firstName2">First Name <span class="required">*</span></label>
+                                    <input type="text" id="id" name="id" class="form-input" autocomplete="off" hidden>
+                                    <input type="text" id="firstName2" name="firstName2" class="form-input" required autocomplete="off">
+                                    <div class="auto-fill-indicator" id="firstNameIndicator2">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="20,6 9,17 4,12"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="autocomplete-suggestions" id="firstNameSuggestions2"></div>
+                                </div>
+                                <div class="form-group autocomplete-container">
+                                    <label class="form-label" for="lastName2">Last Name <span class="required">*</span></label>
+                                    <input type="text" id="lastName2" name="lastName2" class="form-input" required autocomplete="off">
+                                    <div class="auto-fill-indicator" id="lastNameIndicator2">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="20,6 9,17 4,12"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="autocomplete-suggestions" id="lastNameSuggestions2"></div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label class="form-label" for="phone2">Phone Number <span class="required">*</span></label>
+                                <input type="tel" id="phone2" name="phone2" class="form-input" placeholder="+91 9876543210" required>
+                                <div class="auto-fill-indicator" id="phoneIndicator2">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20,6 9,17 4,12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="stylistName2">Stylist Name <span class="required">*</span></label>
+                                    <select id="stylistName2" name="stylistName2" class="form-select" required>
+                                        <option value="">Select Stylist</option>
+                                        <option value="ASHISH">Ashish</option>
+                                        <option value="RAVI">Ravi</option>
+                                        <option value="HIREN">Hiren</option>
+                                        <option value="HARDIK">Hardik</option>
+                                        <option value="BHANO">Bhano</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="serviceType2">Service Type <span class="required">*</span></label>
+                                    <select id="serviceType2" name="serviceType2" class="form-select" required>
+                                        <option value="">Select Service</option>
+                                        <option value="HC">Hair Cut</option>
+                                        <option value="BS">Beard Shave</option>
+                                        <option value="FC">Facial</option>
+                                        <option value="BAHT">Beard and Hair Trimming</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="style2">Cut Style <span class="required">*</span></label>
+                                <input type="text" id="style2" name="style2" class="form-input" placeholder="5 trimmer fade ..." required autocomplete="off">
+                            </div>
+           
+                            <div class="form-group">
+                                <label class="form-label" for="notes2">Additional Notes</label>
+                                <textarea id="notes2" name="notes2" class="form-input form-textarea" placeholder="Please describe your concerns or any special requirements..."></textarea>
+                            </div>
+
+                            <button type="submit" class="submit-btn">
+                                Update Client
+                            </button>
+                        </form>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+       
+
+
+        let customerDatabase = [];
+
+// Fetch customers from API on page load
+async function loadCustomersFromAPI() {
+    try {
+        const response = await fetch('/getClients');
+        const data = await response.json();
+        
+        // Map MongoDB schema to your existing format
+        customerDatabase = data.map(item => ({
+            id: item._id,
+            firstName: item.client.firstName,
+            lastName: item.client.lastName,
+            phone: item.client.phoneNumber,
+            email: '', // Not in your schema, so empty
+            lastVisit: new Date(item.date).toISOString().split('T')[0],
+            preferredStylist: item.stylist.name,
+            preferredService: item.service.serviceType,
+            lastStyle: item.service.styleType || '',
+            comments: item.service.comments || '',
+            createdAt: item.createdAt
+        }));
+        
+        console.log('Customers loaded:', customerDatabase.length);
+    } catch (error) {
+        console.error('Error loading customers:', error);
+        customerDatabase = [];
+    }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadCustomersFromAPI();
+
+
+
+        let selectedCustomerForm1 = null;
+        let selectedCustomerForm2 = null;
+        let currentSuggestionIndex = -1;
+
+        // Form switching functionality
+         const createAppointmentBtn = document.getElementById("create-appointment-btn");
+            const searchClientsBtn = document.getElementById("search-clients-btn");
+            const createAppointmentForm = document.getElementById("create-appointment-form");
+            const searchClientsForm = document.getElementById("search-clients-form");
+
+            createAppointmentBtn.addEventListener("click", (event) => {
+                event.preventDefault();
+                createAppointmentForm.style.display = "block";
+                searchClientsForm.style.display = "none";
+            });
+
+            searchClientsBtn.addEventListener("click", (event) => {
+                
+                event.preventDefault();
+                createAppointmentForm.style.display = "none";
+                searchClientsForm.style.display = "block";
+            });
+
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').setAttribute('min', today);
+
+        // Function to search database by name
+        function searchCustomers(query, field) {
+            if (!query || query.length < 2) return [];
+            
+            const searchTerm = query.toLowerCase();
+            return customerDatabase.filter(customer => 
+                customer[field].toLowerCase().includes(searchTerm)
+            ).slice(0, 5);
+        }
+
+        // Function to create suggestion dropdown
+        function createSuggestions(customers, field, inputId, formType) {
+            const suggestionsContainer = document.getElementById(`${inputId}Suggestions${formType === 'form2' ? '2' : ''}`);
+            suggestionsContainer.innerHTML = '';
+
+            if (customers.length === 0) {
+                suggestionsContainer.classList.remove('show');
+                return;
+            }
+
+            customers.forEach((customer, index) => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'suggestion-item';
+                suggestionItem.innerHTML = `
+                    <div>
+                        <div class="suggestion-name">${customer.firstName} ${customer.lastName}</div>
+                        <div class="suggestion-details">Last visit: ${customer.lastVisit}</div>
+                    </div>
+                    <div class="suggestion-details">${customer.email}</div>
+                `;
+                
+                suggestionItem.addEventListener('click', () => {
+                    selectCustomer(customer, formType);
+                    hideSuggestions();
+                });
+
+                suggestionItem.addEventListener('mouseenter', () => {
+                    currentSuggestionIndex = index;
+                    updateSuggestionSelection(suggestionsContainer);
+                });
+
+                suggestionsContainer.appendChild(suggestionItem);
+            });
+
+            suggestionsContainer.classList.add('show');
+            currentSuggestionIndex = -1;
+        }
+
+        // Function to auto-fill customer data based on form type
+        function selectCustomer(customer, formType) {
+            if (formType === 'form1') {
+                selectedCustomerForm1 = customer;
+                
+                // Fill appointment form fields
+                document.getElementById('firstName').value = customer.firstName;
+                document.getElementById('lastName').value = customer.lastName;
+                document.getElementById('phone').value = customer.phone;
+
+                // Add visual indicators
+                ['firstName', 'lastName', 'phone'].forEach(field => {
+                    const input = document.getElementById(field);
+                    const indicator = document.getElementById(`${field}Indicator`);
+                    
+                    input.classList.add('auto-filled');
+                    if (indicator) {
+                        indicator.classList.add('show');
+                    }
+                });
+
+                showAutoFillMessage(`Welcome back, ${customer.firstName}! Your information has been auto-filled.`);
+            } else {
+                selectedCustomerForm2 = customer;
+                
+                // Fill search clients form fields
+                document.getElementById('firstName2').value = customer.firstName;
+                document.getElementById('lastName2').value = customer.lastName;
+                document.getElementById('phone2').value = customer.phone;
+                
+                // Auto-fill preferred stylist and service if available
+                if (customer.preferredStylist) {
+                    document.getElementById('stylistName2').value = customer.preferredStylist;
+                }
+                if (customer.preferredService) {
+                    document.getElementById('serviceType2').value = customer.preferredService;
+                }
+                if (customer.lastStyle) {
+                    document.getElementById('style2').value = customer.lastStyle;
+                }
+                if (customer.comments) {
+                    document.querySelector("#notes2").value = customer.comments;
+                }
+
+
+
+                // Add visual indicators
+                ['firstName2', 'lastName2',  'phone2'].forEach(field => {
+                    const input = document.getElementById(field);
+                    const indicator = document.getElementById(`${field.replace('2', '')}Indicator2`);
+                    
+                    input.classList.add('auto-filled');
+                    if (indicator) {
+                        indicator.classList.add('show');
+                    }
+                });
+
+                showAutoFillMessage(`Client found: ${customer.firstName} ${customer.lastName}. Information loaded for editing.`);
+            }
+        }
+
+        // Function to show auto-fill success message
+        function showAutoFillMessage(message) {
+            const existingMessage = document.querySelector('.auto-fill-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'auto-fill-message';
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #48bb78;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 500;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                z-index: 10000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            messageDiv.textContent = message;
+
+            document.body.appendChild(messageDiv);
+
+            setTimeout(() => {
+                messageDiv.style.animation = 'slideOut 0.3s ease-in forwards';
+                setTimeout(() => messageDiv.remove(), 300);
+            }, 4000);
+        }
+
+        // Function to hide suggestions
+        function hideSuggestions() {
+            document.querySelectorAll('.autocomplete-suggestions').forEach(container => {
+                container.classList.remove('show');
+            });
+        }
+
+        // Function to update suggestion selection
+        function updateSuggestionSelection(container) {
+            const suggestions = container.querySelectorAll('.suggestion-item');
+            suggestions.forEach((item, index) => {
+                item.classList.toggle('selected', index === currentSuggestionIndex);
+            });
+        }
+
+        // Function to handle keyboard navigation
+        function handleKeyNavigation(e, suggestions) {
+            const suggestionItems = suggestions.querySelectorAll('.suggestion-item');
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                currentSuggestionIndex = Math.min(currentSuggestionIndex + 1, suggestionItems.length - 1);
+                updateSuggestionSelection(suggestions);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                currentSuggestionIndex = Math.max(currentSuggestionIndex - 1, -1);
+                updateSuggestionSelection(suggestions);
+            } else if (e.key === 'Enter' && currentSuggestionIndex >= 0) {
+                e.preventDefault();
+                suggestionItems[currentSuggestionIndex].click();
+            } else if (e.key === 'Escape') {
+                hideSuggestions();
+            }
+        }
+
+        // Function to clear auto-fill styling
+        function clearAutoFill(formType) {
+            if (formType === 'form1') {
+                selectedCustomerForm1 = null;
+                ['firstName', 'lastName', 'email', 'phone'].forEach(field => {
+                    const input = document.getElementById(field);
+                    const indicator = document.getElementById(`${field}Indicator`);
+                    
+                    input.classList.remove('auto-filled');
+                    if (indicator) {
+                        indicator.classList.remove('show');
+                    }
+                });
+            } else {
+                selectedCustomerForm2 = null;
+                ['firstName2', 'lastName2', 'email2', 'phone2'].forEach(field => {
+                    const input = document.getElementById(field);
+                    const indicator = document.getElementById(`${field.replace('2', '')}Indicator2`);
+                    
+                    input.classList.remove('auto-filled');
+                    if (indicator) {
+                        indicator.classList.remove('show');
+                    }
+                });
+            }
+        }
+
+        // Setup autocomplete for Form 1 (Create Appointment)
+        document.getElementById('firstName').addEventListener('input', function(e) {
+            const query = e.target.value;
+            const customers = searchCustomers(query, 'firstName');
+            createSuggestions(customers, 'firstName', 'firstName', 'form1');
+            
+            if (selectedCustomerForm1 && query !== selectedCustomerForm1.firstName) {
+                clearAutoFill('form1');
+            }
+        });
+
+        document.getElementById('lastName').addEventListener('input', function(e) {
+            const query = e.target.value;
+            const customers = searchCustomers(query, 'lastName');
+            createSuggestions(customers, 'lastName', 'lastName', 'form1');
+            
+            if (selectedCustomerForm1 && query !== selectedCustomerForm1.lastName) {
+                clearAutoFill('form1');
+            }
+        });
+
+        // Setup autocomplete for Form 2 (Search Clients)
+        document.getElementById('firstName2').addEventListener('input', function(e) {
+            const query = e.target.value;
+            const customers = searchCustomers(query, 'firstName');
+            createSuggestions(customers, 'firstName', 'firstName', 'form2');
+            
+            if (selectedCustomerForm2 && query !== selectedCustomerForm2.firstName) {
+                clearAutoFill('form2');
+            }
+        });
+
+        document.getElementById('lastName2').addEventListener('input', function(e) {
+            const query = e.target.value;
+            const customers = searchCustomers(query, 'lastName');
+            createSuggestions(customers, 'lastName', 'lastName', 'form2');
+            
+            if (selectedCustomerForm2 && query !== selectedCustomerForm2.lastName) {
+                clearAutoFill('form2');
+            }
+        });
+
+        // Keyboard navigation for both forms
+        document.getElementById('firstName').addEventListener('keydown', function(e) {
+            const suggestions = document.getElementById('firstNameSuggestions');
+            if (suggestions.classList.contains('show')) {
+                handleKeyNavigation(e, suggestions);
+            }
+        });
+
+        document.getElementById('lastName').addEventListener('keydown', function(e) {
+            const suggestions = document.getElementById('lastNameSuggestions');
+            if (suggestions.classList.contains('show')) {
+                handleKeyNavigation(e, suggestions);
+            }
+        });
+
+        document.getElementById('firstName2').addEventListener('keydown', function(e) {
+            const suggestions = document.getElementById('firstNameSuggestions2');
+            if (suggestions.classList.contains('show')) {
+                handleKeyNavigation(e, suggestions);
+            }
+        });
+
+        document.getElementById('lastName2').addEventListener('keydown', function(e) {
+            const suggestions = document.getElementById('lastNameSuggestions2');
+            if (suggestions.classList.contains('show')) {
+                handleKeyNavigation(e, suggestions);
+            }
+        });
+
+        // Hide suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.autocomplete-container')) {
+                hideSuggestions();
+            }
+        });
+
+        // Form submission for Create Appointment
+
+document.getElementById('appointmentForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    // Map form data to your MongoDB schema
+    const appointmentData = {
+        client: {
+            firstName: formData.get('firstName'),
+            lastName: formData.get('lastName'),
+            phoneNumber: formData.get('phone')
+        },
+        service: {
+            serviceType: formData.get('serviceType'),
+            styleType: '', // Not captured in appointment form
+            comments: formData.get('notes') || ''
+        },
+        stylist: {
+            name: formData.get('stylistName') // Fix the duplicate ID issue
+        },
+        date: new Date(`${formData.get('appointmentDate')}T${formData.get('appointmentTime')}:00`)
+    };
+
+  
+    
+    if (selectedCustomerForm1) {
+        appointmentData.isReturningCustomer = true;
+        appointmentData.existingClientId = selectedCustomerForm1.id;
+    }
+    
+    const submitBtn = this.querySelector('.submit-btn');
+    submitBtn.innerHTML = 'Booking...';
+    submitBtn.style.background = '#48bb78';
+
+    
+    try {
+        if(appointmentData.isReturningCustomer){
+        const response = await fetch(`/updateClient/${selectedCustomerForm1.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(appointmentData)
+        });
+        if (response.ok) {
+            const result = await response.json();
+            submitBtn.innerHTML = '✓ Appointment Booked!';
+            
+            // Refresh customer database
+            await loadCustomersFromAPI();
+            
+            setTimeout(() => {
+                const customerType = selectedCustomerForm1 ? 'returning' : 'new';
+                alert(`Thank you${selectedCustomerForm1 ? `, ${selectedCustomerForm1.firstName}` : ''}! Your appointment has been booked successfully.`);
+                
+                submitBtn.innerHTML = 'Book Appointment';
+                submitBtn.style.background = 'linear-gradient(135deg, #eaba66 0%, #a2714b 100%)';
+                this.reset();
+                clearAutoFill('form1');
+            }, 2000);
+        } else {
+            throw new Error('Failed to save appointment');
+        }
+        }else{
+            const response = await fetch('/createClient', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(appointmentData)
+        });
+        if (response.ok) {
+            const result = await response.json();
+            submitBtn.innerHTML = '✓ Appointment Booked!';
+            
+            // Refresh customer database
+            await loadCustomersFromAPI();
+            
+            setTimeout(() => {
+                const customerType = selectedCustomerForm1 ? 'returning' : 'new';
+                alert(`Thank you${selectedCustomerForm1 ? `, ${selectedCustomerForm1.firstName}` : ''}! Your appointment has been booked successfully.`);
+                
+                submitBtn.innerHTML = 'Book Appointment';
+                submitBtn.style.background = 'linear-gradient(135deg, #eaba66 0%, #a2714b 100%)';
+                this.reset();
+                clearAutoFill('form1');
+            }, 2000);
+        } else {
+            throw new Error('Failed to save appointment');
+        }
+        }
+        
+
+
+        
+    } catch (error) {
+        console.error('Error saving appointment:', error);
+        submitBtn.innerHTML = 'Error - Try Again';
+        submitBtn.style.background = '#e53e3e';
+        
+        setTimeout(() => {
+            submitBtn.innerHTML = 'Book Appointment';
+            submitBtn.style.background = 'linear-gradient(135deg, #eaba66 0%, #a2714b 100%)';
+        }, 3000);
+    }
+});
+        
+
+// Form submission for Search Clients
+document.getElementById('searchClientsForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+
+    
+    // Map form data to your MongoDB schema
+    const clientData = {
+        client: {
+            firstName: formData.get('firstName2'),
+            lastName: formData.get('lastName2'),
+            phoneNumber: formData.get('phone2')
+        },
+        service: {
+            serviceType: formData.get('serviceType2'),
+            styleType: formData.get('style2') || '',
+            comments: formData.get('notes2') || ''
+        },
+        stylist: {
+            name: formData.get('stylistName2')
+        },
+        date: new Date() // Current date for the update
+    };
+    
+    if (selectedCustomerForm2) {
+        clientData.isExistingCustomer = true;
+        clientData.existingClientId = selectedCustomerForm2.id;
+    }
+    
+    const submitBtn = this.querySelector('.submit-btn');
+    submitBtn.innerHTML = 'Updating...';
+    submitBtn.style.background = '#48bb78';
+
+    
+    try {
+        const response = await fetch(`/updateClient/${selectedCustomerForm2.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(clientData)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            submitBtn.innerHTML = '✓ Client Updated!';
+            
+            // Refresh customer database
+            await loadCustomersFromAPI();
+            
+            setTimeout(() => {
+                alert(`Client information has been updated successfully!`);
+                
+                submitBtn.innerHTML = 'Update Client';
+                submitBtn.style.background = 'linear-gradient(135deg, #eaba66 0%, #a2714b 100%)';
+                this.reset();
+                clearAutoFill('form2');
+            }, 2000);
+        } else {
+            throw new Error('Failed to update client');
+        }
+    } catch (error) {
+        console.error('Error updating client:', error);
+        submitBtn.innerHTML = 'Error - Try Again';
+        submitBtn.style.background = '#e53e3e';
+        
+        setTimeout(() => {
+            submitBtn.innerHTML = 'Update Client';
+            submitBtn.style.background = 'linear-gradient(135deg, #eaba66 0%, #a2714b 100%)';
+        }, 3000);
+    }
+});
+    
+    
+    });
+    // Refresh customer data every 5 minutes
+setInterval(async () => {
+    await loadCustomersFromAPI();
+    console.log('Customer data refreshed');
+}, 5 * 60 * 1000); // 5 minutes
+        </script>
+
+    
